@@ -23,7 +23,7 @@ block content
           .panel-heading
             h3.panel-title Please sign in
           .panel-body
-            form(accept-charset='UTF-8', role='form')
+            form(accept-charset='UTF-8', role='form', action='/login', method='POST')
               fieldset
                 .form-group
                   input.form-control(placeholder='E-mail', name='email', type='text')
@@ -35,6 +35,7 @@ block content
                       input(name='remember', type='checkbox', value='Remember Me')
                       | Remember Me
                 input.btn.btn-lg.btn-success.btn-block(type='submit', value='Login')
+                a(href='/signup', class='text-center new-account' style='float: right') Create an account
 
 append javascript
   script.
