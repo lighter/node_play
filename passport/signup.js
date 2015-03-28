@@ -44,11 +44,17 @@ module.exports = function(passport){
               newUser.password = createHash(password);
 
               // save the user
-              newUser.save(function(err) {
+              newUser.save(function(err, save_user) {
                 if (err){
                     console.log('Error in Saving user: '+err);
                     throw err;
                 }
+
+                // Seting session
+                req.session.user_id = save_user._id;
+                req.session.email = email
+                req.session.loginStatus = 1;
+
                 console.log('User Registration succesful');
                 return done(null, newUser);
               });

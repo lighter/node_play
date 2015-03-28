@@ -15,10 +15,17 @@ var app = express();
 
 // passport
 var passport = require('passport');
-var expressSession = require('express-session');
-app.use(expressSession({secret: 'ajfopsdjfpo2j3p432sdaf'}));
+
+var session = require('express-session');
+app.use(session({
+  secret: 'ajfopsdjfpo2j3p432sdaf',
+  resave: false,
+  saveUninitialized: true
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
+
 
  // Using the flash middleware provided by connect-flash to store messages in session
  // and displaying in templates

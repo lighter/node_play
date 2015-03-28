@@ -1,2 +1,3 @@
-#PLAY NODEJS
-這是一個隨便亂玩的專案...
+# PLAY NODEJS
+
+這是個自己練習玩玩的專案

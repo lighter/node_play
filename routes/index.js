@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var Category = require('../models/category');
 
 var isAuthenticated = function (req, res, next) {
   // if user is authenticated in the session, call the next() to call the next request handler
@@ -51,6 +52,64 @@ module.exports = function(passport){
   router.get('/signout', function(req, res) {
     req.logout();
     res.redirect('/');
+  });
+
+  /* GET Category Page */
+  router.get('/category', isAuthenticated, function(req, res){
+    Category.find({'beloneTo': req.session.user_id}, function(err, categorys) {
+      res.render('category', {
+        user_id: req.session.user_id,
+        categorys: categorys,
+        user: {
+          email: req.session.email,
+        }
+      });
+    });
+  });
+
+  /* Handle Category POST */
+  router.post('/category', isAuthenticated, function(req, res){
+    var beloneTo = req.session.user_id;
+    var name = req.param('add_category');
+
+    Category.findOne(
+      {
+        'beloneTo': beloneTo,
+        'name': name
+      },
+      function(err, category) {
+
+        if (err){
+          console.log('Error in SignUp: '+err);
+        }
+
+        if (category) {
+          console.log('Category already exists');
+        }
+        else {
+            var new_category = new Category();
+            console.log(beloneTo);
+            console.log(name);
+
+            // set the user's local credentials
+            new_category.name = name;
+            new_category.beloneTo = beloneTo;
+
+            // save the user
+            new_category.save(function(err) {
+              if (err){
+                  console.log('Error in Saving user: '+err);
+              }
+
+              console.log('Category Add succesful');
+
+              res.send(
+                (err === null) ? { msg: 'ok' } : { msg: err }
+              );
+            });
+        }
+      }
+    );
   });
 
   return router;

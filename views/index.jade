@@ -36,17 +36,24 @@ block content
                       | Remember Me
                 input.btn.btn-lg.btn-success.btn-block(type='submit', value='Login')
                 a(href='/signup', class='text-center new-account' style='float: right') Create an account
+                #message
+                if message
+                  span.label.label-danger #{message}
 
 append javascript
   script.
     $(document).ready(function(){
+
       $(document).mousemove(function(e){
-         TweenLite.to($('body'),
-            .5,
-            { css:
-                {
-                    backgroundPosition: ""+ parseInt(event.pageX/8) + "px "+parseInt(event.pageY/'12')+"px, "+parseInt(event.pageX/'15')+"px "+parseInt(event.pageY/'15')+"px, "+parseInt(event.pageX/'30')+"px "+parseInt(event.pageY/'30')+"px"
-                }
-            });
+        TweenLite.to($('body'), .5,
+          { css:
+            {
+              backgroundPosition: ""+ parseInt(event.pageX/8) + "px "+parseInt(event.pageY/'12')+"px, "+parseInt(event.pageX/'15')+"px "+parseInt(event.pageY/'15')+"px, "+parseInt(event.pageX/'30')+"px "+parseInt(event.pageY/'30')+"px"
+            }
+        });
       });
+
+      if ($('span.label-danger').length > 0) {
+        $('span.label-danger').delay(1000).slideUp(400);
+      }
     });

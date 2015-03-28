@@ -1,0 +1,28 @@
+extends layout2
+
+append extraHeader
+    script(src='/javascripts/category.js')
+
+block content
+  // Begin page content
+  .container
+    .page-header
+      h1 分類管理
+    form.navbar-form.navbar-left
+      .form-group
+        input.form-control(placeholder='分類', name='category', type='text', id='add_category_input')
+      button.btn.btn-default(type='button', id='add_category_button') 新增
+
+    table.table.table-bordered
+      thead
+        tr
+          td #
+          td 分類名稱
+          td
+      tbody
+        for category, index in categorys
+          tr
+            td= index
+            td= category.name
+            td 編輯/修改
+

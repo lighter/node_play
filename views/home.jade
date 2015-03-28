@@ -1,15 +1,38 @@
-extends layout
+extends layout2
+
+append extraHeader
+    link(rel='stylesheet', href='/stylesheets/fullcalendar.min.css')
+    script(src='/javascripts/lib/moment.min.js')
+    script(src='/javascripts/fullcalendar.min.js')
+    script(src='/javascripts/lang-all.js')
 
 block content
-  div.container
-    div.row
-      div.col-sm-6.col-md-4.col-md-offset-4
-        #user
-          h1.text-center.login-title Welcome #{user.firstName}. Check your details below:
-            div.signup-wall
-              ul.user-details
-                li Username ---> #{user.username}
-                li Email    ---> #{user.email}
-                li First Name ---> #{user.firstName}
-                li Last Name ---> #{user.lastName}
-            a(href='/signout', class='text-center new-account') Sign Out
+  // Begin page content
+  .container
+    .row
+      #calendar.col-md-8
+      .col-md-4
+        form.form-horizontal(role="form")
+          .form-group
+            .input-group
+              .input-group-addon 日期
+              input#date-input.form-control(type="text")
+            .input-group
+              .input-group-addon 分類
+              select.form-control
+                option default
+            .input-group
+              .input-group-addon 價格
+              input#price-input.form-control(type="text")
+            .input-group
+              .input-group-addon 備註
+              input#comment-input.form-control
+            button.btn.btn-info.btn-block(type='button', id='add_category_button') 新增
+
+append javascript
+  script.
+    $(document).ready(function(){
+      $('#calendar').fullCalendar({
+          lang: 'zh-tw'
+        });
+    });

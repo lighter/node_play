@@ -5,6 +5,8 @@ var bCrypt = require('bcrypt-nodejs');
 module.exports = function(passport){
 
   passport.use('login', new LocalStrategy({
+        usernameField : 'email',
+        passwordField : 'password',
         passReqToCallback : true
     },
     function(req, email, password, done) {
@@ -24,6 +26,12 @@ module.exports = function(passport){
             console.log('Invalid Password');
             return done(null, false, req.flash('message', 'Invalid Password')); // redirect back to login page
           }
+
+          // Setting session
+          req.session.user_id = user.id;
+          req.session.email = email
+          req.session.loginStatus = 1;
+
           // User and password both match, return user from done method
           // which will be treated like success
           return done(null, user);
